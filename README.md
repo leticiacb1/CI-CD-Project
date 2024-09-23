@@ -61,6 +61,54 @@ Create a `venv` and install dependencies:
 
 #### ❓️ How to use the project
 
+File `pytest.ini` (at root) enable module importing during test running.
+
+Check locally if the test are passing:
+
+```bash
+    # In root of the project
+    pytest
+```
+
+In **Github Actions** the actions to be performed are stored in the `.github/workflows`  folder in the repository root and are represented in YAML format.
+
+Explain the .yaml file example:
+
+```yaml
+# Provide a description for the workflow with:
+name: An example of an automatic testing action
+
+# We set the action to be run whenever there is a push on the main branch when doing:
+on:
+push:
+    branches:
+    - main
+
+# To define a job, which is a group of steps that are executed together as part of a workflow run, we do:
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+
+# To bring code from the repository into the container:
+- name: Checkout code
+  uses: actions/checkout@v4
+
+# To set up Python:
+- name: Set up Python
+  uses: actions/setup-python@v4
+  with:
+    python-version: '3.10'
+
+# To install dependencies
+- name: Install dependencies
+  run: pip install -r requirements.txt
+
+# To run tests:
+- name: Run tests
+  run: pytest
+```
+
 <br>
 @2024, Insper. 9° Semester,  Computer Engineering.
 <br>
