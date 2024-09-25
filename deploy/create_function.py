@@ -1,8 +1,8 @@
 import boto3
 import os
 
-# Provide function name: wc_INSPER_USERNAME
-function_name = ""
+username = "leticiacb1"
+function_name = "wc_" + username
 
 lambda_client = boto3.client(
     "lambda",

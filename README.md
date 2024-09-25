@@ -71,6 +71,16 @@ Set all the secrests :
   
 * `AWS_LAMBDA_ROLE_ARN`
 
+Also create a `.env` file with the following:
+
+```bash
+    # .env content'
+    AWS_ACCESS_KEY_ID="XXXXXXXXXXXXXX"
+    AWS_SECRET_ACCESS_KEY="aaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    AWS_REGION="xx-xxxx-2"
+    AWS_LAMBDA_ROLE_ARN="arn:xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+``` 
+
 #### ❓️ How to use the project
 
 File `pytest.ini` (at root) enable module importing during test running.
