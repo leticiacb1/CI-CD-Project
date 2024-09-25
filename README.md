@@ -7,7 +7,7 @@
 <br>
 
 <div align="center">
-    <img src="ci-cd-flow-desktop.png" width="700">
+    <img src="img/ci-cd-flow-desktop.png" width="700">
 </div>
 
 <br>
@@ -28,9 +28,10 @@
 
 </li>
 
+
 <li> <b> Continuous Deployment </b>
 
-Continuous Deployment takes automation one step further than Continuous Delivery. With Continuous Deployment, validated code changes are automatically released to production without any manual intervention.
+<br>Continuous Deployment takes automation one step further than Continuous Delivery. With Continuous Deployment, validated code changes are automatically released to production without any manual intervention.
 
   - Fully automated process from commit to production with no manual steps
   - New changes are immediately tested and deployed if they pass
@@ -43,6 +44,12 @@ Continuous Deployment takes automation one step further than Continuous Delivery
 
 > In this project we will use **Github Actions**.  
 
+<br>
+
+<div align="center">
+    <img src="img/auto-deploy.png" width="700">
+</div>
+<br>
 
 #### 📌 Dependencies
 
@@ -80,6 +87,12 @@ Also create a `.env` file with the following:
     AWS_REGION="xx-xxxx-2"
     AWS_LAMBDA_ROLE_ARN="arn:xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ``` 
+
+Configure your AWS credentials:
+
+```bash
+    aws configure
+```
 
 #### ❓️ How to use the project
 
@@ -145,6 +158,30 @@ jobs:
 ```
 
 This configuration file make that every time we push something in this repository the workflow runs and the code will be deployed.
+
+After the push of the project is expected to see something like this in `Actions` on the repository: 
+
+```bash
+--------------------            -------------------
+|  build-and-test  |    ---->   |  deploy-to-aws  |
+--------------------            ------------------- 
+```
+
+For test the lambda function deployed run:
+
+```bash
+  $ cd src
+  $ python3 check_lambda_function.py
+```
+
+For delete the lambda function deployed run:
+
+```bash
+  $ cd src
+  $ python3 delete_lambda_function.py
+```
+
+> :warning: After deleting the function, you need to "push" it back to the repository if you want to create the function again.
 
 <br>
 @2024, Insper. 9° Semester,  Computer Engineering.
