@@ -41,7 +41,7 @@ Continuous Deployment takes automation one step further than Continuous Delivery
 
 <br>
 
-> In this project we will use **Github Actions**. 
+> In this project we will use **Github Actions**.  
 
 
 #### 📌 Dependencies
@@ -58,6 +58,18 @@ Create a `venv` and install dependencies:
     # Install dependencies
     $ pip install -r requirements.txt
 ``` 
+
+Configure the secrets in your repository : go to the repository site on `github / settings / Secrets and variables / Actions` and add a **new repository secrets**.
+
+Set all the secrests :
+
+* `AWS_ACCESS_KEY_ID`
+  
+* `AWS_SECRET_ACCESS_KEY`
+  
+* `AWS_REGION`
+  
+* `AWS_LAMBDA_ROLE_ARN`
 
 #### ❓️ How to use the project
 
@@ -89,25 +101,40 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
+      # To bring code from the repository into the container:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-# To bring code from the repository into the container:
-- name: Checkout code
-  uses: actions/checkout@v4
+      # To set up Python:
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
 
-# To set up Python:
-- name: Set up Python
-  uses: actions/setup-python@v4
-  with:
-    python-version: '3.10'
+      # To install dependencies
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
-# To install dependencies
-- name: Install dependencies
-  run: pip install -r requirements.txt
+      # To run tests:
+      - name: Run tests
+        run: pytest
 
-# To run tests:
-- name: Run tests
-  run: pytest
+  # Define how the function will be deploy in AWS
+  deploy-to-aws:
+      needs: build-and-test      # If this job fail will be no deploy
+      runs-on: ubuntu-latest
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+        AWS_LAMBDA_ROLE_ARN: ${{ secrets.AWS_LAMBDA_ROLE_ARN }}
+      steps:
+        # --- Omited Code ---- 
+        # (Same as in build-and-test job)
+
 ```
+
+This configuration file make that every time we push something in this repository the workflow runs and the code will be deployed.
 
 <br>
 @2024, Insper. 9° Semester,  Computer Engineering.
