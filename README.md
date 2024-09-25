@@ -181,7 +181,13 @@ For delete the lambda function deployed run:
   $ python3 delete_lambda_function.py
 ```
 
-> :warning: After deleting the function, you need to "push" it back to the repository if you want to create the function again.
+> :warning: If the function was already deployed and you try to deploy it again the workflow will fail if the error:
+> 
+> _botocore.errorfactory.ResourceConflictException: An error occurred (ResourceConflictException) when calling the CreateFunction operation: Function already exist: wc_leticiacb1_
+>
+> Before deploy the function again you need to delete the function first (_python3 delete_lambda_function.py_)
+> >
+> After deleting the function, you need to "push" it back to the repository if you want to create the function again.
 
 <br>
 @2024, Insper. 9° Semester,  Computer Engineering.
